@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan make:model:*)",
+      "Bash(php artisan make:filament-resource:*)",
+      "Bash(php artisan make:filament-page:*)",
+      "Bash(php artisan make:controller:*)",
+      "Bash(mkdir:*)",
+      "Bash(php artisan make:factory:*)",
+      "Bash(php artisan make:seeder:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
