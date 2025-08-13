@@ -7,7 +7,8 @@
       "Bash(php artisan make:controller:*)",
       "Bash(mkdir:*)",
       "Bash(php artisan make:factory:*)",
-      "Bash(php artisan make:seeder:*)"
+      "Bash(php artisan make:seeder:*)",
+      "WebFetch(domain:spotlight.tailwindui.com)"
     ],
     "deny": [],
     "ask": []

@@ -2,48 +2,56 @@
 
 @section('content')
 <!-- Hero Section with Book Info -->
-<section class="bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center bg-white rounded-full px-4 py-2 shadow-sm mb-4">
-                <span class="text-green-600 font-medium">✅ QR Code Verified</span>
-            </div>
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">Welcome to Our Community!</h1>
-            <p class="text-xl text-gray-700">
-                You've found a special book, and now you're invited to join an amazing network of readers and thinkers.
-            </p>
-        </div>
-        
-        <!-- Book Display -->
-        <div class="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
-            <div class="text-center">
-                <div class="h-32 w-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg mx-auto mb-4 flex items-center justify-center">
-                    @if($book->cover_image_url)
-                        <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="h-28 w-auto object-cover rounded">
-                    @else
-                        <span class="text-3xl">📖</span>
-                    @endif
+<div class="mx-auto max-w-7xl lg:px-8">
+    <div class="relative px-4 sm:px-8 lg:px-12">
+        <div class="mx-auto max-w-2xl lg:max-w-5xl">
+            <div class="py-16 sm:py-20">
+                <div class="text-center mb-12">
+                    <div class="inline-flex items-center bg-teal-50 dark:bg-teal-900/20 rounded-full px-4 py-2 ring-1 ring-teal-600/10 mb-6">
+                        <span class="text-teal-600 dark:text-teal-400 font-medium text-sm">✅ QR Code Verified</span>
+                    </div>
+                    <h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl mb-6">
+                        Welcome to our community
+                    </h1>
+                    <p class="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+                        You've found a special book, and now you're invited to join a network of readers and thinkers who believe in the power of shared knowledge.
+                    </p>
                 </div>
-                <h2 class="text-xl font-bold text-gray-900 mb-2">{{ $book->title }}</h2>
-                <p class="text-gray-600 mb-1">by {{ $book->author }}</p>
-                @if($book->description)
-                    <p class="text-sm text-gray-500 mt-3">{{ Str::limit($book->description, 120) }}</p>
-                @endif
+                
+                <!-- Book Display -->
+                <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-sm ring-1 ring-zinc-900/5 dark:ring-zinc-700/50 p-8 max-w-md mx-auto">
+                    <div class="text-center">
+                        <div class="h-32 w-24 bg-zinc-100 dark:bg-zinc-700 rounded-xl mx-auto mb-6 flex items-center justify-center">
+                            @if($book->cover_image_url)
+                                <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="h-28 w-auto object-cover rounded-lg">
+                            @else
+                                <span class="text-3xl">📖</span>
+                            @endif
+                        </div>
+                        <h2 class="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-2">{{ $book->title }}</h2>
+                        <p class="text-zinc-600 dark:text-zinc-400 mb-1">by {{ $book->author }}</p>
+                        @if($book->description)
+                            <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-4">{{ Str::limit($book->description, 120) }}</p>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <!-- Registration Form -->
-<section class="py-16 bg-gray-50">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white rounded-xl shadow-lg p-8">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-4">Join Our Community</h2>
-                <p class="text-gray-600">
-                    Share your thoughts about this book and connect with other readers who've been touched by the same stories.
-                </p>
-            </div>
+<div class="mx-auto max-w-7xl lg:px-8">
+    <div class="relative px-4 sm:px-8 lg:px-12">
+        <div class="mx-auto max-w-2xl lg:max-w-5xl">
+            <div class="border-t border-zinc-100 dark:border-zinc-700/40 pt-16">
+                <div class="bg-zinc-50 dark:bg-zinc-800/50 rounded-2xl p-8 lg:p-12">
+                    <div class="text-center mb-12">
+                        <h2 class="text-2xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mb-6">Join our community</h2>
+                        <p class="text-base text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto">
+                            Share your thoughts about this book and connect with other readers who've been touched by the same stories.
+                        </p>
+                    </div>
             
             @if($errors->any())
                 <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -72,7 +80,7 @@
                 
                 <!-- Name -->
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+                    <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                         Your Name *
                     </label>
                     <input 
@@ -81,7 +89,7 @@
                         name="name" 
                         value="{{ old('name') }}"
                         required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors @error('name') border-red-300 @enderror"
+                        class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors @error('name') border-red-300 @enderror"
                         placeholder="Enter your full name"
                     >
                     @error('name')
@@ -91,7 +99,7 @@
                 
                 <!-- Email -->
                 <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                    <label for="email" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                         Email Address *
                     </label>
                     <input 
@@ -100,7 +108,7 @@
                         name="email" 
                         value="{{ old('email') }}"
                         required
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
+                        class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors @error('email') border-red-300 @enderror"
                         placeholder="your.email@example.com"
                     >
                     @error('email')
@@ -110,15 +118,15 @@
                 
                 <!-- Phone (Optional) -->
                 <div>
-                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
-                        Phone Number <span class="text-gray-400">(optional)</span>
+                    <label for="phone" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                        Phone Number <span class="text-zinc-400 dark:text-zinc-500">(optional)</span>
                     </label>
                     <input 
                         type="tel" 
                         id="phone" 
                         name="phone" 
                         value="{{ old('phone') }}"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors @error('phone') border-red-300 @enderror"
+                        class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors @error('phone') border-red-300 @enderror"
                         placeholder="+1 (555) 123-4567"
                     >
                     @error('phone')
@@ -128,13 +136,13 @@
                 
                 <!-- How Found -->
                 <div>
-                    <label for="how_found" class="block text-sm font-medium text-gray-700 mb-2">
-                        How did you find this book? <span class="text-gray-400">(optional)</span>
+                    <label for="how_found" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                        How did you find this book? <span class="text-zinc-400 dark:text-zinc-500">(optional)</span>
                     </label>
                     <select 
                         id="how_found" 
                         name="how_found"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors @error('how_found') border-red-300 @enderror"
+                        class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors @error('how_found') border-red-300 @enderror"
                     >
                         <option value="">Choose an option...</option>
                         <option value="Friend recommendation" {{ old('how_found') == 'Friend recommendation' ? 'selected' : '' }}>Friend recommendation</option>
@@ -154,8 +162,8 @@
                 
                 <!-- Interests -->
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-3">
-                        What topics interest you? <span class="text-gray-400">(optional)</span>
+                    <label class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-3">
+                        What topics interest you? <span class="text-zinc-400 dark:text-zinc-500">(optional)</span>
                     </label>
                     <div class="grid grid-cols-2 gap-3">
                         @php
@@ -175,15 +183,15 @@
                         @endphp
                         
                         @foreach($interests as $interest)
-                            <label class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+                            <label class="flex items-center p-3 bg-zinc-100 dark:bg-zinc-700 rounded-lg hover:bg-zinc-200 dark:hover:bg-zinc-600 transition-colors cursor-pointer">
                                 <input 
                                     type="checkbox" 
                                     name="interests[]" 
                                     value="{{ $interest }}"
                                     {{ in_array($interest, $oldInterests) ? 'checked' : '' }}
-                                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                    class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-zinc-300 dark:border-zinc-600 rounded"
                                 >
-                                <span class="ml-3 text-sm text-gray-700">{{ $interest }}</span>
+                                <span class="ml-3 text-sm text-zinc-700 dark:text-zinc-300">{{ $interest }}</span>
                             </label>
                         @endforeach
                     </div>
@@ -194,17 +202,17 @@
                 
                 <!-- Message -->
                 <div>
-                    <label for="message" class="block text-sm font-medium text-gray-700 mb-2">
-                        Share your thoughts about this book <span class="text-gray-400">(optional)</span>
+                    <label for="message" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+                        Share your thoughts about this book <span class="text-zinc-400 dark:text-zinc-500">(optional)</span>
                     </label>
                     <textarea 
                         id="message" 
                         name="message" 
                         rows="4"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors resize-none @error('message') border-red-300 @enderror"
+                        class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors resize-none @error('message') border-red-300 @enderror"
                         placeholder="What did you think of this book? How has it impacted you? Any insights you'd like to share with the community?"
                     >{{ old('message') }}</textarea>
-                    <div class="mt-1 text-xs text-gray-500">
+                    <div class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                         This helps other readers understand the book's impact and builds our community.
                     </div>
                     @error('message')
@@ -216,51 +224,57 @@
                 <div class="pt-6">
                     <button 
                         type="submit"
-                        class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg font-medium hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 transition-all duration-200 transform hover:scale-[1.02]"
+                        class="w-full bg-teal-600 text-white py-4 px-6 rounded-lg font-medium hover:bg-teal-700 focus:ring-4 focus:ring-teal-200 dark:focus:ring-teal-800 transition-all duration-200"
                     >
-                        🎉 Join the Community
+                        Join the Community
                     </button>
                     
-                    <p class="text-center text-xs text-gray-500 mt-4">
+                    <p class="text-center text-xs text-zinc-500 dark:text-zinc-400 mt-4">
                         By joining, you're helping build a community of curious minds and lifelong learners.
                     </p>
                 </div>
             </form>
-        </div>
-    </div>
-</section>
-
-<!-- Community Preview -->
-<section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">You're About to Join Something Special</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
-                <div class="text-center p-6">
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-xl">🤝</span>
-                    </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Connect with Readers</h3>
-                    <p class="text-sm text-gray-600">Share thoughts and insights with people who've read the same books</p>
-                </div>
-                
-                <div class="text-center p-6">
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-xl">💡</span>
-                    </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Discover New Ideas</h3>
-                    <p class="text-sm text-gray-600">Learn from different perspectives and expand your worldview</p>
-                </div>
-                
-                <div class="text-center p-6">
-                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <span class="text-xl">📚</span>
-                    </div>
-                    <h3 class="font-semibold text-gray-900 mb-2">Build Knowledge</h3>
-                    <p class="text-sm text-gray-600">Be part of a growing library of shared wisdom and experiences</p>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
+
+<!-- Community Preview -->
+<div class="mx-auto max-w-7xl lg:px-8">
+    <div class="relative px-4 sm:px-8 lg:px-12">
+        <div class="mx-auto max-w-2xl lg:max-w-5xl">
+            <div class="border-t border-zinc-100 dark:border-zinc-700/40 pt-16">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mb-6">You're about to join something special</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span class="text-xl">🤝</span>
+                            </div>
+                            <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Connect with readers</h3>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400">Share thoughts and insights with people who've read the same books</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span class="text-xl">💡</span>
+                            </div>
+                            <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Discover new ideas</h3>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400">Learn from different perspectives and expand your worldview</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <span class="text-xl">📚</span>
+                            </div>
+                            <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Build knowledge</h3>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400">Be part of a growing library of shared wisdom and experiences</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
