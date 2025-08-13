@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewCommunityMemberNotification;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
 use App\Services\QrCodeService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
 
 class CommunityController extends Controller
 {
@@ -20,13 +21,13 @@ class CommunityController extends Controller
         if ($distribution->communityMember) {
             return view('community.already-registered', [
                 'distribution' => $distribution,
-                'member' => $distribution->communityMember
+                'member' => $distribution->communityMember,
             ]);
         }
 
         return view('community.join', [
             'distribution' => $distribution,
-            'book' => $distribution->book
+            'book' => $distribution->book,
         ]);
     }
 
@@ -66,9 +67,15 @@ class CommunityController extends Controller
         // Update distribution status
         $distribution->update(['status' => 'registered']);
 
+        // Send notification email
+        $adminEmail = config('mail.admin_email', config('mail.from.address'));
+        if ($adminEmail) {
+            Mail::to($adminEmail)->send(new NewCommunityMemberNotification($member));
+        }
+
         return view('community.success', [
             'member' => $member,
-            'book' => $distribution->book
+            'book' => $distribution->book,
         ]);
     }
 

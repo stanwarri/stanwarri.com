@@ -8,9 +8,14 @@
       "Bash(mkdir:*)",
       "Bash(php artisan make:factory:*)",
       "Bash(php artisan make:seeder:*)",
-      "WebFetch(domain:spotlight.tailwindui.com)"
+      "WebFetch(domain:spotlight.tailwindui.com)",
+      "Bash(php artisan make:filament-exporter:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "laravel-boost"
+  ]
 }

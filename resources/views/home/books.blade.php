@@ -67,7 +67,7 @@
                     </article>
                     @endforeach
                 </div>
-                
+
                 <!-- Pagination -->
                 @if($books->hasPages())
                     <div class="mt-16 border-t border-zinc-100 pt-16 dark:border-zinc-700/40">
@@ -90,6 +90,8 @@
     </div>
 </div>
 
+
+
 <!-- Community Impact Section -->
 <div class="mx-auto max-w-7xl lg:px-8">
     <div class="relative px-4 sm:px-8 lg:px-12">
@@ -103,16 +105,16 @@
                         <p class="text-base text-zinc-600 dark:text-zinc-400 mb-8 max-w-2xl mx-auto">
                             If you have one of these books with a QR code, you're holding more than just pages – you're holding an invitation to join a community of readers and thinkers.
                         </p>
-                        
+
                         <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
                             <div class="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm ring-1 ring-zinc-900/5 dark:ring-zinc-700/50">
                                 <div class="text-2xl mb-3">📱</div>
                                 <div class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Scan the QR code</div>
                                 <div class="text-xs text-zinc-500 dark:text-zinc-400">with your phone camera</div>
                             </div>
-                            
+
                             <div class="text-2xl text-zinc-400 rotate-90 sm:rotate-0 dark:text-zinc-500">→</div>
-                            
+
                             <div class="bg-white dark:bg-zinc-800 rounded-xl p-6 shadow-sm ring-1 ring-teal-600/10">
                                 <div class="text-2xl mb-3">🤝</div>
                                 <div class="text-sm font-medium text-zinc-800 dark:text-zinc-100">Join our community</div>
