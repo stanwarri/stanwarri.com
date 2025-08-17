@@ -63,7 +63,7 @@ class BookDistributionsTable
                 TextColumn::make('communityMember.name')
                     ->label('Registered By')
                     ->placeholder('Not registered')
-                    ->sortable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
                     ->label('Created')

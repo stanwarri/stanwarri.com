@@ -13,6 +13,8 @@ class DistributionChart extends ChartWidget
 
     protected int|string|array $columnSpan = 'full';
 
+    protected static ?int $sort = 2;
+
     protected function getData(): array
     {
         $months = collect();

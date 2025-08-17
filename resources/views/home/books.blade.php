@@ -7,10 +7,10 @@
         <div class="mx-auto max-w-2xl lg:max-w-5xl">
             <div class="py-16 sm:py-20">
                 <h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-                    Books creating connections
+                    Stories That Bring Us Together
                 </h1>
                 <p class="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-                    These are the books that have found their way to wonderful people in our community. Each one carries a story, not just in its pages, but in the connections it creates. Every book shared is an invitation to join a larger conversation about growth, curiosity, and the power of shared knowledge.
+                    Over the years, I’ve made it a personal mission to share books — sometimes with friends, sometimes with total strangers — simply because I believe stories are meant to travel. These are the books that have found their way into the hands of wonderful people. Each one carries more than the words on its pages; it builds connections. Every copy passed on becomes an invitation to step into a larger conversation about growth, curiosity, and the incredible power of shared knowledge.
                 </p>
             </div>
         </div>
@@ -20,51 +20,45 @@
 <!-- Books Grid -->
 <div class="mx-auto max-w-7xl lg:px-8">
     <div class="relative px-4 sm:px-8 lg:px-12">
-        <div class="mx-auto max-w-2xl lg:max-w-5xl">
+        <div class="mx-auto max-w-6xl">
             @if($books->count() > 0)
-                <div class="grid grid-cols-1 gap-16 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach($books as $book)
-                    <article class="group relative flex flex-col items-start">
-                        <div class="relative z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+                    <div class="group relative bg-white dark:bg-zinc-800 rounded-2xl shadow-sm ring-1 ring-zinc-900/5 dark:ring-zinc-700/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                        <!-- Book Cover -->
+                        <div class="aspect-[3/4] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 relative overflow-hidden">
                             @if($book->cover_image_url)
-                                <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="h-8 w-8 rounded object-cover">
+                                <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                             @else
-                                <span class="text-lg">📚</span>
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <div class="text-center">
+                                        <div class="text-4xl mb-2">📚</div>
+                                        <div class="text-xs text-zinc-500 dark:text-zinc-400 px-4 leading-tight">{{ Str::limit($book->title, 30) }}</div>
+                                    </div>
+                                </div>
+                            @endif
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+
+                        <!-- Book Information -->
+                        <div class="p-6">
+                            <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 text-lg leading-tight mb-2 line-clamp-2">
+                                {{ $book->title }}
+                            </h3>
+                            <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+                                by {{ $book->author }}
+                            </p>
+                            @if($book->description)
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
+                                    {{ $book->description }}
+                                </p>
                             @endif
                         </div>
-                        <h2 class="mt-6 text-base font-semibold text-zinc-800 dark:text-zinc-100">
-                            <div class="absolute -inset-x-4 -inset-y-6 z-0 scale-95 bg-zinc-50 opacity-0 transition group-hover:scale-100 group-hover:opacity-100 dark:bg-zinc-800/50 sm:-inset-x-6 sm:rounded-2xl"></div>
-                            <span class="relative z-10">{{ $book->title }}</span>
-                        </h2>
-                        <p class="relative z-10 mt-2 text-sm text-zinc-600 dark:text-zinc-400">by {{ $book->author }}</p>
-                        @if($book->description)
-                            <p class="relative z-10 mt-6 text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3">{{ $book->description }}</p>
-                        @endif
-                        <div class="relative z-10 mt-6 flex text-sm text-zinc-400 dark:text-zinc-500">
-                            <span class="relative z-10 flex items-center text-sm text-zinc-400 dark:text-zinc-500">
-                                {{ $book->distributions->count() }} {{ Str::plural('copy', $book->distributions->count()) }} shared
-                                @if($book->distributions->where('status', 'registered')->count() > 0)
-                                    • {{ $book->distributions->where('status', 'registered')->count() }} joined
-                                @endif
-                            </span>
-                        </div>
-                        @if($book->distributions->where('status', '!=', 'pending')->count() > 0)
-                            <div class="relative z-10 mt-4 border-t border-zinc-100 pt-4 dark:border-zinc-700/40">
-                                <p class="text-xs font-medium text-zinc-500 dark:text-zinc-400 mb-2">Recently shared:</p>
-                                <div class="space-y-1">
-                                    @foreach($book->distributions->where('status', '!=', 'pending')->sortByDesc('distribution_date')->take(2) as $distribution)
-                                        <div class="text-xs text-zinc-400 dark:text-zinc-500 flex items-center">
-                                            <span class="w-1.5 h-1.5 bg-teal-500 rounded-full mr-2"></span>
-                                            {{ $distribution->distribution_location ?? 'Unknown location' }}
-                                            @if($distribution->distribution_date)
-                                                • {{ $distribution->distribution_date->format('M j') }}
-                                            @endif
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                    </article>
+
+                        <!-- Hover Effect -->
+                        <div class="absolute inset-0 rounded-2xl ring-2 ring-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    </div>
                     @endforeach
                 </div>
 
@@ -76,12 +70,12 @@
                 @endif
             @else
                 <!-- Empty State -->
-                <div class="text-center py-16">
-                    <div class="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <span class="text-2xl">📚</span>
+                <div class="text-center py-20">
+                    <div class="w-20 h-20 bg-gradient-to-br from-teal-50 to-teal-100 dark:from-teal-900/20 dark:to-teal-800/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <span class="text-3xl">📚</span>
                     </div>
-                    <h3 class="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">No books shared yet</h3>
-                    <p class="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto">
+                    <h3 class="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 mb-4">No books shared yet</h3>
+                    <p class="text-zinc-600 dark:text-zinc-400 max-w-md mx-auto text-lg">
                         Check back soon! I'm always adding new books to share with the community.
                     </p>
                 </div>
@@ -90,7 +84,31 @@
     </div>
 </div>
 
-
+<!-- Animated Counter Section -->
+<div class="mx-auto max-w-7xl lg:px-8">
+    <div class="relative px-4 sm:px-8 lg:px-12">
+        <div class="mx-auto max-w-2xl lg:max-w-5xl">
+            <div class="py-8 text-center">
+                <div class="bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-teal-900/20 dark:to-emerald-900/20 rounded-3xl p-8 shadow-sm ring-1 ring-teal-100 dark:ring-teal-800/50">
+                    <div class="flex flex-col items-center">
+                        <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-teal-500 to-emerald-500 rounded-2xl mb-6 shadow-lg">
+                            <span class="text-2xl text-white">📚</span>
+                        </div>
+                        <p class="text-sm font-medium text-teal-700 dark:text-teal-300 mb-2 uppercase tracking-wide">
+                            Total Books Shared
+                        </p>
+                        <div class="text-6xl font-bold text-teal-900 dark:text-teal-100 mb-4">
+                            {{ $booksGivenOutCount }}
+                        </div>
+                        <p class="text-base text-teal-700/80 dark:text-teal-300/80 max-w-md">
+                            Stories spreading across our community, one reader at a time
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Community Impact Section -->
 <div class="mx-auto max-w-7xl lg:px-8">
@@ -129,3 +147,4 @@
 </div>
 
 @endsection
+

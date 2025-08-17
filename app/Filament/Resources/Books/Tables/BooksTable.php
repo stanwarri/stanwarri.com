@@ -30,7 +30,8 @@ class BooksTable
             ->columns([
                 ImageColumn::make('cover_image_url')
                     ->label('Cover')
-                    ->height(60)
+                    ->disk('public')
+                    ->visibility('public')
                     ->defaultImageUrl('/images/book-placeholder.png'),
 
                 TextColumn::make('title')
@@ -57,11 +58,11 @@ class BooksTable
 
                 TextColumn::make('purchase_date')
                     ->date()
-                    ->sortable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('purchase_price')
                     ->money('USD')
-                    ->sortable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('has_stock')

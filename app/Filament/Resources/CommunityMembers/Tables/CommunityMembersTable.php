@@ -21,12 +21,10 @@ class CommunityMembersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 TextColumn::make('email')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 TextColumn::make('phone')
                     ->placeholder('Not provided'),
@@ -34,28 +32,27 @@ class CommunityMembersTable
                 TextColumn::make('bookDistribution.book.title')
                     ->label('Book Received')
                     ->placeholder('No book associated')
-                    ->searchable()
-                    ->sortable(),
+                    ->searchable(),
 
                 TextColumn::make('bookDistribution.book.author')
                     ->label('Author')
                     ->placeholder('No book associated')
                     ->searchable()
-                    ->sortable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('how_found')
                     ->label('How Found')
-                    ->placeholder('Not specified'),
+                    ->placeholder('Not specified')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('registered_at')
                     ->label('Registered')
                     ->dateTime()
-                    ->sortable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('created_at')
                     ->label('Created')
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

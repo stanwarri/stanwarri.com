@@ -22,20 +22,25 @@ class BookForm
                     ->required()
                     ->maxLength(255),
 
-                TextInput::make('isbn')
-                    ->label('ISBN')
-                    ->maxLength(255),
+                TextInput::make('quantity_purchased')
+                    ->label('Quantity Purchased')
+                    ->required()
+                    ->numeric()
+                    ->default(1)
+                    ->minValue(1),
+
+                DatePicker::make('purchase_date')
+                    ->label('Purchase Date'),
 
                 Textarea::make('description')
-                    ->rows(3),
+                    ->rows(3)
+                    ->columnSpanFull(),
 
                 UrlImageUploader::make('cover_image_url')
                     ->label('Cover Image')
                     ->directory('book-covers')
-                    ->preserveFilenames(true),
-
-                DatePicker::make('purchase_date')
-                    ->label('Purchase Date'),
+                    ->preserveFilenames(true)
+                    ->columnSpanFull(),
 
                 TextInput::make('purchase_price')
                     ->label('Purchase Price')
@@ -43,12 +48,10 @@ class BookForm
                     ->prefix('$')
                     ->step(0.01),
 
-                TextInput::make('quantity_purchased')
-                    ->label('Quantity Purchased')
-                    ->required()
-                    ->numeric()
-                    ->default(1)
-                    ->minValue(1),
+                TextInput::make('isbn')
+                    ->label('ISBN')
+                    ->maxLength(255),
+
             ]);
     }
 }

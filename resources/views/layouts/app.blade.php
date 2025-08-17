@@ -93,7 +93,7 @@
                                             <a class="transition hover:text-teal-500 dark:hover:text-teal-400" href="{{ route('home') }}">About</a>
                                             <a class="transition hover:text-teal-500 dark:hover:text-teal-400" href="{{ route('books') }}">Books</a>
                                         </div>
-                                        <p class="text-sm text-zinc-400 dark:text-zinc-500">© {{ date('Y') }} Stanley Ojadovwa. Building community through shared knowledge.</p>
+                                        <p class="text-sm text-zinc-400 dark:text-zinc-500">© {{ date('Y') }} Stanley Ojadovwa</p>
                                     </div>
                                 </div>
                             </div>

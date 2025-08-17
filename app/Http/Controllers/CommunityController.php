@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewCommunityMemberNotification;
+use App\Models\BookCounter;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
 use App\Services\QrCodeService;
@@ -66,6 +67,9 @@ class CommunityController extends Controller
 
         // Update distribution status
         $distribution->update(['status' => 'registered']);
+
+        // Increment books given out counter
+        BookCounter::incrementBooksGivenOut();
 
         // Send notification email
         $adminEmail = config('mail.admin_email', config('mail.from.address'));

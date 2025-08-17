@@ -2,17 +2,18 @@
 
 namespace App\Filament\Components;
 
-use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Illuminate\Support\Facades\Storage;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Schemas\Components\Actions as SchemasActions;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Storage;
 
 class UrlImageUploader extends Field
 {
@@ -41,18 +42,20 @@ class UrlImageUploader extends Field
         return $this->directory;
     }
 
-    public function getChildComponents(?string $key = null): array
+    protected function setUp(): void
     {
+        parent::setUp();
+
         $fieldName = $this->getName();
 
-        return [
+        $this->schema([
             Tabs::make('upload_methods')
                 ->tabs([
                     Tab::make('upload')
                         ->label('File Upload')
-                        ->icon('heroicon-o-arrow-up-tray')
+                        ->icon(Heroicon::ArrowUpTray)
                         ->schema([
-                            FileUpload::make($fieldName)
+                            FileUpload::make("{$fieldName}")
                                 ->image()
                                 ->preserveFilenames($this->shouldPreserveFilenames)
                                 ->directory($this->directory)
@@ -70,10 +73,11 @@ class UrlImageUploader extends Field
                                 })
                                 ->afterStateUpdated(function ($state, Set $set) use ($fieldName) {
                                     if ($state) {
-                                        $uploadedFile = is_array($state) ? $state[0] : $state;
+                                        $uploadedFile = $state ?? null;
                                         if ($uploadedFile instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
                                             $filename = $uploadedFile->getClientOriginalName();
 
+                                            // Save file to storage
                                             $path = $uploadedFile->storeAs(
                                                 $this->directory,
                                                 $filename,
@@ -81,25 +85,35 @@ class UrlImageUploader extends Field
                                             );
 
                                             $url = Storage::disk('public')->url($path);
-                                            $set($fieldName, $path);
-                                            $set("{$fieldName}_preview", $url);
+                                            $set("{$fieldName}", [$path]);
+                                            $set("{$fieldName}_url", $url);
                                         }
                                     }
                                 }),
                         ]),
                     Tab::make('url')
                         ->label('URL Upload')
-                        ->icon('heroicon-o-globe-alt')
+                        ->icon(Heroicon::GlobeAlt)
                         ->schema([
                             TextInput::make("{$fieldName}_url")
+                                ->label('Image URL')
                                 ->url()
-                                ->helperText('Enter a valid image URL (JPG, PNG, GIF, WEBP)'),
-                            SchemasActions::make([
-                                Actions\Action::make('fetch')
+                                ->placeholder('https://example.com/image.jpg')
+                                ->helperText('Enter a valid image URL (JPG, PNG, GIF, WEBP)')
+                                ->live()
+                                ->afterStateUpdated(function ($state, Set $set) use ($fieldName) {
+                                    if (empty($state)) {
+                                        $set("{$fieldName}_preview", null);
+                                    }
+                                }),
+                            Actions::make([
+                                Action::make('fetch')
                                     ->label('Fetch Image')
-                                    ->icon('heroicon-o-arrow-down-tray')
-                                    ->action(function (Set $set, $state) use ($fieldName) {
-                                        $imageUrl = $state["{$fieldName}_url"] ?? null;
+                                    ->icon(Heroicon::ArrowDownTray)
+                                    ->color('primary')
+                                    ->requiresConfirmation(false)
+                                    ->action(function (Set $set, Get $get) use ($fieldName) {
+                                        $imageUrl = $get("{$fieldName}_url");
 
                                         if (! $imageUrl || ! filter_var($imageUrl, FILTER_VALIDATE_URL)) {
                                             Notification::make()
@@ -112,7 +126,6 @@ class UrlImageUploader extends Field
                                         }
 
                                         try {
-                                            // Get image content with proper headers
                                             $context = stream_context_create([
                                                 'http' => [
                                                     'method' => 'GET',
@@ -121,6 +134,10 @@ class UrlImageUploader extends Field
                                                         'Accept: image/*',
                                                     ],
                                                     'timeout' => 30,
+                                                ],
+                                                'ssl' => [
+                                                    'verify_peer' => false,
+                                                    'verify_peer_name' => false,
                                                 ],
                                             ]);
 
@@ -156,8 +173,8 @@ class UrlImageUploader extends Field
                                             Storage::disk('public')->put($path, $imageContent);
 
                                             $url = Storage::disk('public')->url($path);
-                                            $set($fieldName, $path);
-                                            $set("{$fieldName}_preview", $url);
+                                            $set($fieldName, [$path]);
+                                            $set("{$fieldName}_url", $url);
 
                                             Notification::make()
                                                 ->success()
@@ -173,10 +190,15 @@ class UrlImageUploader extends Field
                                                 ->send();
                                         }
                                     }),
-                            ]),
+                            ])->alignStart(),
                         ]),
                 ])
                 ->columnSpanFull(),
-        ];
+        ]);
+    }
+
+    public static function make(?string $name = null): static
+    {
+        return parent::make($name);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\BookCounter;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class HomeController extends Controller
             ->latest('created_at')
             ->paginate(12);
 
-        return view('home.books', compact('books'));
+        $booksGivenOutCount = BookCounter::getBooksGivenOutCount();
+
+        return view('home.books', compact('books', 'booksGivenOutCount'));
     }
 }

@@ -9,7 +9,9 @@
       "Bash(php artisan make:factory:*)",
       "Bash(php artisan make:seeder:*)",
       "WebFetch(domain:spotlight.tailwindui.com)",
-      "Bash(php artisan make:filament-exporter:*)"
+      "Bash(php artisan make:filament-exporter:*)",
+      "mcp__laravel-boost__database-schema",
+      "Bash(php artisan make:migration:*)"
     ],
     "deny": [],
     "ask": []

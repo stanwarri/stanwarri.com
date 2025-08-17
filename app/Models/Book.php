@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Book extends Model
 {
@@ -11,7 +12,7 @@ class Book extends Model
 
     protected $fillable = [
         'title',
-        'author', 
+        'author',
         'isbn',
         'description',
         'cover_image_url',
@@ -24,6 +25,14 @@ class Book extends Model
         'purchase_date' => 'date',
         'purchase_price' => 'decimal:2'
     ];
+
+    protected function coverImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value,
+            set: fn ($value) => is_array($value) ? $value['cover_image_url'] : $value,
+        );
+    }
 
     public function distributions()
     {
