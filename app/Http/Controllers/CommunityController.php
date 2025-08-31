@@ -7,6 +7,7 @@ use App\Models\BookCounter;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
 use App\Services\QrCodeService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -94,10 +95,34 @@ class CommunityController extends Controller
             'author' => $distribution->book->author,
         ]);
 
-        return view('qr.print', [
+        // Get random inspirational message
+        $messages = config('qr-messages.inspirational_messages');
+        $inspirationalMessage = $messages[array_rand($messages)];
+        
+        // Get signature and current date
+        $signature = config('qr-messages.signature');
+        $generatedDate = now()->format('M j, Y');
+
+        $pdf = Pdf::loadView('qr.pdf-print', [
             'distribution' => $distribution,
             'printData' => $printData,
+            'inspirationalMessage' => $inspirationalMessage,
+            'signature' => $signature,
+            'generatedDate' => $generatedDate,
+        ])
+        ->setPaper([0, 0, 113.04, 84.96], 'portrait') // 1.57in x 1.18in in points
+        ->setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isPhpEnabled' => false,
+            'defaultFont' => 'Arial',
+            'dpi' => 96,
+            'fontSubstitution' => false,
+            'debugKeepTemp' => false
         ]);
+
+        $filename = 'qr-code-' . $distribution->book->title . '-' . $qrCode . '.pdf';
+        
+        return $pdf->download($filename);
     }
 
     public function viewQr(string $qrCode, QrCodeService $qrService)
