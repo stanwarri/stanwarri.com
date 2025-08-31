@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('production')) {
-            DB::table('admins')->insert([
+            DB::table('users')->insert([
                 'name' => 'Stanley Ojadovwa',
                 'email' => 'stanley.warri@gmail.com',
                 'password' => bcrypt('stan2025yr#$'),
@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ]);
         } else {
-            DB::table('admins')->insert([
+            DB::table('users')->insert([
                 'name' => 'Stanley Ojadovwa',
                 'email' => 'stanley.warri@gmail.com',
                 'password' => bcrypt('12345678'),
