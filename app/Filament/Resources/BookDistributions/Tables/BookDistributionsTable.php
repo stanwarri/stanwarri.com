@@ -25,7 +25,8 @@ class BookDistributionsTable
                 TextColumn::make('book.title')
                     ->label('Book Title')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->wrap(),
 
                 TextColumn::make('book.author')
                     ->label('Author')
@@ -71,6 +72,7 @@ class BookDistributionsTable
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('status')
                     ->options([

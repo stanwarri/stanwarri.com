@@ -21,9 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTheme(getPreferredTheme());
 
     // Add click event listener to dark mode toggle button
-    const themeToggle = document.querySelector('button[aria-label*="theme"]');
+    const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
+        themeToggle.addEventListener('click', (e) => {
+            e.preventDefault();
             const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
             setTheme(newTheme);
@@ -33,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 newTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
             );
         });
+    } else {
+        console.error('Theme toggle button not found');
     }
 
     // Mobile menu functionality

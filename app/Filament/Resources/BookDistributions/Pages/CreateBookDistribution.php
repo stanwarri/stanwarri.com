@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateBookDistribution extends CreateRecord
 {
     protected static string $resource = BookDistributionResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

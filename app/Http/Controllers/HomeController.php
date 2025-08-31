@@ -36,9 +36,6 @@ class HomeController extends Controller
         $books = Book::with(['distributions' => function ($query) {
             $query->where('status', '!=', 'pending');
         }])
-            ->whereHas('distributions', function ($query) {
-                $query->where('status', '!=', 'pending');
-            })
             ->latest('created_at')
             ->paginate(12);
 
