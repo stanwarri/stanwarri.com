@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -29,7 +30,12 @@ class Book extends Model
     protected function coverImageUrl(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value,
+            get: function ($value) {
+                if (str_starts_with($value, 'https')) {
+                    return $value;
+                }
+                return $value ? Storage::url($value) : '/images/placeholder.jpg';
+            },
             set: fn ($value) => is_array($value) ? $value['cover_image_url'] : $value,
         );
     }

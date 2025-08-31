@@ -19,7 +19,6 @@ class CommunityController extends Controller
             ->with(['book', 'communityMember'])
             ->firstOrFail();
 
-        // Check if already registered
         if ($distribution->communityMember) {
             return view('community.already-registered', [
                 'distribution' => $distribution,
@@ -39,7 +38,6 @@ class CommunityController extends Controller
             ->with(['book', 'communityMember'])
             ->firstOrFail();
 
-        // Check if already registered
         if ($distribution->communityMember) {
             return redirect()->route('community.join', $qrCode)
                 ->with('error', 'This book has already been registered.');
@@ -78,10 +76,7 @@ class CommunityController extends Controller
             Mail::to($adminEmail)->send(new NewCommunityMemberNotification($member));
         }
 
-        return view('community.success', [
-            'member' => $member,
-            'book' => $distribution->book,
-        ]);
+        return redirect()->route('home');
     }
 
     public function printQr(string $qrCode, QrCodeService $qrService)
@@ -98,7 +93,7 @@ class CommunityController extends Controller
         // Get random inspirational message
         $messages = config('qr-messages.inspirational_messages');
         $inspirationalMessage = $messages[array_rand($messages)];
-        
+
         // Get signature and current date
         $signature = config('qr-messages.signature');
         $generatedDate = now()->format('M j, Y');
@@ -121,7 +116,7 @@ class CommunityController extends Controller
         ]);
 
         $filename = 'qr-code-' . $distribution->book->title . '-' . $qrCode . '.pdf';
-        
+
         return $pdf->download($filename);
     }
 
