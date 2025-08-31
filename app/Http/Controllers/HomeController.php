@@ -39,6 +39,14 @@ class HomeController extends Controller
             ->latest('created_at')
             ->paginate(12);
 
+        // Transform books for JavaScript to include full image URLs
+        $books->getCollection()->transform(function ($book) {
+            if ($book->cover_image_url) {
+                $book->cover_image_url = \Illuminate\Support\Facades\Storage::url($book->cover_image_url);
+            }
+            return $book;
+        });
+
         $booksGivenOutCount = BookCounter::getBooksGivenOutCount();
 
         return view('home.books', compact('books', 'booksGivenOutCount'));
