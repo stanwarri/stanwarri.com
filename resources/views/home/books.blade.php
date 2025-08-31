@@ -29,7 +29,7 @@
                         <!-- Book Cover -->
                         <div class="aspect-[3/4] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 relative overflow-hidden">
                             @if($book->cover_image_url)
-                                <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image_url) }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
+                                <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}" class="w-full h-full object-cover">
                             @else
                                 <div class="w-full h-full flex items-center justify-center">
                                     <div class="text-center">
