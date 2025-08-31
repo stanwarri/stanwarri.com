@@ -36,6 +36,7 @@ class BooksTable
 
                 TextColumn::make('title')
                     ->searchable()
+                    ->wrap()
                     ->sortable(),
 
                 TextColumn::make('author')

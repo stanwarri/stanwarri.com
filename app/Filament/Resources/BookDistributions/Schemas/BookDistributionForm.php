@@ -21,25 +21,26 @@ class BookDistributionForm
                     ->relationship('book', 'title')
                     ->required()
                     ->searchable()
+                    ->preload()
                     ->getOptionLabelFromRecordUsing(fn (Book $record): string => "{$record->title} by {$record->author}"),
-                
+
                 TextInput::make('qr_code')
                     ->label('QR Code')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->default(fn () => Str::random(20))
                     ->helperText('Auto-generated unique code for this distribution'),
-                
+
                 DatePicker::make('distribution_date')
                     ->label('Distribution Date'),
-                
+
                 TextInput::make('distribution_location')
                     ->label('Distribution Location')
                     ->maxLength(255),
-                
+
                 Textarea::make('notes')
                     ->rows(3),
-                
+
                 Select::make('status')
                     ->options([
                         'pending' => 'Pending',

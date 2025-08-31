@@ -27,12 +27,32 @@
                                         </div>
                                         <div class="flex flex-1 justify-end md:justify-center">
                                             <div class="pointer-events-auto md:hidden">
-                                                <button class="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20" type="button" aria-expanded="false">
+                                                <button id="mobile-menu-button" class="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu">
                                                     Menu
-                                                    <svg viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400">
+                                                    <svg id="menu-icon-closed" viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400 transition-transform">
+                                                        <path d="m1.5 1 3 3 3-3" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                    <svg id="menu-icon-open" viewBox="0 0 8 6" aria-hidden="true" class="ml-3 h-auto w-2 stroke-zinc-500 group-hover:stroke-zinc-700 dark:group-hover:stroke-zinc-400 transition-transform rotate-180 hidden">
                                                         <path d="m1.5 1 3 3 3-3" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                                                     </svg>
                                                 </button>
+                                                <!-- Mobile Navigation Menu -->
+                                                <div id="mobile-menu" class="absolute top-16 left-4 right-4 hidden">
+                                                    <nav class="rounded-xl bg-white/90 px-4 py-4 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
+                                                        <ul class="space-y-2">
+                                                            <li>
+                                                                <a class="block px-3 py-2 rounded-lg transition {{ request()->routeIs('home') ? 'text-teal-500 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20' : 'hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-100 dark:hover:bg-zinc-700' }}" href="{{ route('home') }}">
+                                                                    About
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="block px-3 py-2 rounded-lg transition {{ request()->routeIs('books') ? 'text-teal-500 dark:text-teal-400 bg-teal-50 dark:bg-teal-900/20' : 'hover:text-teal-500 dark:hover:text-teal-400 hover:bg-zinc-100 dark:hover:bg-zinc-700' }}" href="{{ route('books') }}">
+                                                                    Books
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
                                             </div>
                                             <nav class="pointer-events-auto hidden md:block">
                                                 <ul class="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">

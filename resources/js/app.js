@@ -35,6 +35,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Mobile menu functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIconClosed = document.getElementById('menu-icon-closed');
+    const menuIconOpen = document.getElementById('menu-icon-open');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            const isOpen = !mobileMenu.classList.contains('hidden');
+            
+            if (isOpen) {
+                // Close menu
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                menuIconClosed.classList.remove('hidden');
+                menuIconOpen.classList.add('hidden');
+            } else {
+                // Open menu
+                mobileMenu.classList.remove('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'true');
+                menuIconClosed.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                menuIconClosed.classList.remove('hidden');
+                menuIconOpen.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+                menuIconClosed.classList.remove('hidden');
+                menuIconOpen.classList.add('hidden');
+            }
+        });
+    }
+
     // Listen for system theme changes
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (!getStoredTheme()) {
