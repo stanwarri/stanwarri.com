@@ -11,3 +11,4 @@ Route::get('/join/{qrCode}', [CommunityController::class, 'show'])->name('commun
 Route::post('/join/{qrCode}', [CommunityController::class, 'store'])->name('community.register');
 
 Route::get('/qr/print/{qrCode}', [CommunityController::class, 'printQr'])->name('qr.print');
+Route::get('/qr/view/{qrCode}', [CommunityController::class, 'viewQr'])->name('qr.view');

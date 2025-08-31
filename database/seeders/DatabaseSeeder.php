@@ -13,13 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user for testing
-        User::factory()->create([
-            'name' => 'Stanley Ojadovwa',
-            'email' => 'stanley.warri@gmail.com',
+        $this->call([
+            UserSeeder::class,
+            BookCommunitySeeder::class
         ]);
-
-        // Seed book community data
-        $this->call(BookCommunitySeeder::class);
     }
 }

@@ -109,6 +109,11 @@ class BookDistributionsTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('view_qr')
+                    ->label('View QR Code')
+                    ->icon('heroicon-o-qr-code')
+                    ->url(fn ($record) => route('qr.view', $record->qr_code))
+                    ->openUrlInNewTab(),
                 Action::make('print_qr')
                     ->label('Print QR Code')
                     ->icon('heroicon-o-printer')

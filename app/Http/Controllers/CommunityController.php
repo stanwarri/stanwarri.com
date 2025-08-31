@@ -99,4 +99,21 @@ class CommunityController extends Controller
             'printData' => $printData,
         ]);
     }
+
+    public function viewQr(string $qrCode, QrCodeService $qrService)
+    {
+        $distribution = BookDistribution::where('qr_code', $qrCode)
+            ->with('book')
+            ->firstOrFail();
+
+        $qrData = $qrService->generatePrintableQrCode($qrCode, [
+            'title' => $distribution->book->title,
+            'author' => $distribution->book->author,
+        ]);
+
+        return view('qr.view', [
+            'distribution' => $distribution,
+            'qrData' => $qrData,
+        ]);
+    }
 }
