@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 
 class BookDistributionForm
 {
@@ -18,7 +19,11 @@ class BookDistributionForm
             ->components([
                 Select::make('book_id')
                     ->label('Book')
-                    ->relationship('book', 'title')
+                    ->relationship(
+                        'book',
+                        'title',
+                        modifyQueryUsing: fn (Builder $query) => $query->orderBy('created_at', 'desc'),
+                    )
                     ->required()
                     ->searchable()
                     ->preload()
