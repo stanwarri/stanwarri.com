@@ -24,7 +24,8 @@
             @if($books->count() > 0)
                 <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     @foreach($books as $book)
-                    <div class="group relative bg-white dark:bg-zinc-800 rounded-2xl shadow-sm ring-1 ring-zinc-900/5 dark:ring-zinc-700/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02]">
+                    <div class="group relative bg-white dark:bg-zinc-800 rounded-2xl shadow-sm ring-1 ring-zinc-900/5 dark:ring-zinc-700/50 overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] cursor-pointer"
+                         onclick="openBookModal({{ $loop->index }})">
                         <!-- Book Cover -->
                         <div class="aspect-[3/4] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 relative overflow-hidden">
                             @if($book->cover_image_url)
@@ -49,9 +50,13 @@
                             <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
                                 by {{ $book->author }}
                             </p>
-                            @if($book->description)
+                            @if($book->excerpt)
                                 <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
-                                    {{ $book->description }}
+                                    {{ $book->excerpt }}
+                                </p>
+                            @elseif($book->description)
+                                <p class="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-3 leading-relaxed">
+                                    {{ Str::limit($book->description, 150) }}
                                 </p>
                             @endif
                         </div>
@@ -145,6 +150,85 @@
         </div>
     </div>
 </div>
+
+<!-- Book Modal -->
+<div id="bookModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+    <div class="flex min-h-screen items-center justify-center p-4">
+        <!-- Background overlay -->
+        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onclick="closeBookModal()"></div>
+
+        <!-- Modal content -->
+        <div class="relative bg-white dark:bg-zinc-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="p-8">
+                <!-- Close button -->
+                <button onclick="closeBookModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 text-2xl">
+                    ×
+                </button>
+
+                <!-- Modal content will be populated by JavaScript -->
+                <div id="modalContent">
+                    <!-- Content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Books data for JavaScript
+    const books = @json($books->items());
+
+    function openBookModal(bookIndex) {
+        const book = books[bookIndex];
+        const modal = document.getElementById('bookModal');
+        const modalContent = document.getElementById('modalContent');
+
+        // Build modal content
+        let content = `
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="md:w-1/3 flex-shrink-0">
+                    ${book.cover_image_url
+                        ? `<img src="${book.cover_image_url}" alt="${book.title}" class="w-full aspect-[3/4] object-cover rounded-lg">`
+                        : `<div class="w-full aspect-[3/4] bg-gradient-to-br from-zinc-100 to-zinc-200 dark:from-zinc-700 dark:to-zinc-800 rounded-lg flex items-center justify-center">
+                             <div class="text-center">
+                                 <div class="text-4xl mb-2">📚</div>
+                                 <div class="text-xs text-zinc-500 dark:text-zinc-400 px-4">${book.title}</div>
+                             </div>
+                           </div>`
+                    }
+                </div>
+                <div class="md:w-2/3">
+                    <h2 class="text-2xl font-bold text-zinc-800 dark:text-zinc-100 mb-2">${book.title}</h2>
+                    <p class="text-lg text-zinc-600 dark:text-zinc-400 mb-6">by ${book.author}</p>
+
+                    ${book.description ? `
+                        <div>
+                            <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-2">Description</h3>
+                            <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed">${book.description}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+
+        modalContent.innerHTML = content;
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookModal() {
+        const modal = document.getElementById('bookModal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeBookModal();
+        }
+    });
+</script>
 
 @endsection
 

@@ -16,15 +16,8 @@ class CommunityController extends Controller
     public function show(string $qrCode)
     {
         $distribution = BookDistribution::where('qr_code', $qrCode)
-            ->with(['book', 'communityMember'])
+            ->with(['book', 'communityMembers'])
             ->firstOrFail();
-
-        if ($distribution->communityMember) {
-            return view('community.already-registered', [
-                'distribution' => $distribution,
-                'member' => $distribution->communityMember,
-            ]);
-        }
 
         return view('community.join', [
             'distribution' => $distribution,
@@ -35,13 +28,8 @@ class CommunityController extends Controller
     public function store(Request $request, string $qrCode)
     {
         $distribution = BookDistribution::where('qr_code', $qrCode)
-            ->with(['book', 'communityMember'])
+            ->with('book')
             ->firstOrFail();
-
-        if ($distribution->communityMember) {
-            return redirect()->route('community.join', $qrCode)
-                ->with('error', 'This book has already been registered.');
-        }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -64,11 +52,16 @@ class CommunityController extends Controller
             'registered_at' => now(),
         ]);
 
-        // Update distribution status
-        $distribution->update(['status' => 'registered']);
+        // Update distribution status to registered (only if not already registered)
+        if ($distribution->status === 'pending' || $distribution->status === 'distributed') {
+            $distribution->update(['status' => 'registered']);
+        }
 
-        // Increment books given out counter
-        BookCounter::incrementBooksGivenOut();
+        // Increment books given out counter only for first registration
+        $existingMembers = CommunityMember::where('book_distribution_id', $distribution->id)->count();
+        if ($existingMembers === 1) {
+            BookCounter::incrementBooksGivenOut();
+        }
 
         // Send notification email
         $adminEmail = config('mail.admin_email', config('mail.from.address'));
@@ -76,7 +69,10 @@ class CommunityController extends Controller
             Mail::to($adminEmail)->send(new NewCommunityMemberNotification($member));
         }
 
-        return redirect()->route('home');
+        return view('community.success', [
+            'member' => $member,
+            'book' => $distribution->book,
+        ]);
     }
 
     public function printQr(string $qrCode, QrCodeService $qrService)

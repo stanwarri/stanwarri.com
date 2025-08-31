@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Books\Schemas;
 
+use Filament\Forms\Components\RichEditor;
 use App\Filament\Components\UrlImageUploader;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Textarea;
@@ -32,8 +33,13 @@ class BookForm
                 DatePicker::make('purchase_date')
                     ->label('Purchase Date'),
 
-                Textarea::make('description')
-                    ->rows(3)
+                Textarea::make('excerpt')
+                    ->label('Excerpt')
+                    ->helperText('Short summary or preview of the book to display on the books page')
+                    ->rows(2)
+                    ->columnSpanFull(),
+
+                RichEditor::make('description')
                     ->columnSpanFull(),
 
                 UrlImageUploader::make('cover_image_url')

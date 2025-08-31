@@ -27,7 +27,7 @@
                             <div
                                 class="h-32 w-24 bg-zinc-100 dark:bg-zinc-700 rounded-xl mx-auto mb-6 flex items-center justify-center overflow-hidden">
                                 @if($book->cover_image_url)
-                                    <img src="{{ $book->cover_image_url }}" alt="{{ $book->title }}"
+                                    <img src="{{ \Illuminate\Support\Facades\Storage::url($book->cover_image_url) }}" alt="{{ $book->title }}"
                                          class="h-full w-full object-cover rounded-xl">
                                     <div class="hidden h-full w-full items-center justify-center">
                                         <span class="text-3xl">📖</span>
@@ -38,8 +38,8 @@
                             </div>
                             <h2 class="text-xl font-semibold text-zinc-800 dark:text-zinc-100 mb-2">{{ $book->title }}</h2>
                             <p class="text-zinc-600 dark:text-zinc-400 mb-1">by {{ $book->author }}</p>
-                            @if($book->description)
-                                <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-4">{{ Str::limit($book->description, 120) }}</p>
+                            @if($book->excerpt)
+                                <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-4">{{ $book->excerpt }}</p>
                             @endif
                         </div>
                     </div>
@@ -199,52 +199,6 @@
                                 </p>
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Community Preview -->
-    <div class="mx-auto max-w-7xl lg:px-8">
-        <div class="relative px-4 sm:px-8 lg:px-12">
-            <div class="mx-auto max-w-2xl lg:max-w-5xl">
-                <div class="border-t border-zinc-100 dark:border-zinc-700/40 pt-16">
-                    <div class="text-center">
-                        <h2 class="text-2xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mb-6">You're about
-                            to join something special</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                            <div class="text-center">
-                                <div
-                                    class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <span class="text-xl">🤝</span>
-                                </div>
-                                <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Connect with
-                                    readers</h3>
-                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Share thoughts and insights with
-                                    people who've read the same books</p>
-                            </div>
-
-                            <div class="text-center">
-                                <div
-                                    class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <span class="text-xl">💡</span>
-                                </div>
-                                <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Discover new ideas</h3>
-                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Learn from different perspectives
-                                    and expand your worldview</p>
-                            </div>
-
-                            <div class="text-center">
-                                <div
-                                    class="w-12 h-12 bg-teal-100 dark:bg-teal-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <span class="text-xl">📚</span>
-                                </div>
-                                <h3 class="font-semibold text-zinc-800 dark:text-zinc-100 mb-3">Build knowledge</h3>
-                                <p class="text-sm text-zinc-600 dark:text-zinc-400">Be part of a growing library of
-                                    shared wisdom and experiences</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

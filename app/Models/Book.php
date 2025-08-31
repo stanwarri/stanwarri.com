@@ -16,6 +16,7 @@ class Book extends Model
         'author',
         'isbn',
         'description',
+        'excerpt',
         'cover_image_url',
         'purchase_date',
         'purchase_price',
@@ -30,12 +31,7 @@ class Book extends Model
     protected function coverImageUrl(): Attribute
     {
         return Attribute::make(
-            get: function ($value) {
-                if (str_starts_with($value, 'https')) {
-                    return $value;
-                }
-                return $value ? Storage::url($value) : '/images/placeholder.jpg';
-            },
+            get: fn ($value) => $value,
             set: fn ($value) => is_array($value) ? $value['cover_image_url'] : $value,
         );
     }

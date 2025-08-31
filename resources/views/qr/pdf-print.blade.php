@@ -32,24 +32,23 @@
 
         .main-table {
             width: 100%;
-            border-collapse: collapse; /* keep it tight */
+            background: #fff;
+            border-collapse: collapse;
             table-layout: fixed;
             page-break-inside: avoid;
         }
 
-        /* 1:3 ratio */
         .qr-cell {
-            width: 25%;
+            width: 0.72in;
             text-align: center;
             vertical-align: middle;
-            padding: 2px 2px; /* minimal so the QR fits */
+            padding: 4px;
         }
 
         .text-cell {
-            width: 75%;
-            text-align: center;
+            width: 0.85in;
             vertical-align: middle;
-            padding: 2px 6px 2px 8px; /* left pad = spacing between QR and text */
+            padding: 4px 6px;
         }
 
         .qr-wrapper {
@@ -58,18 +57,16 @@
 
         .qr-frame {
             background: #000;
-            border-radius: 6px;
-            padding: 1px;              /* tiny frame so it doesn’t steal width */
-            display: block;            /* take full line */
-            width: 100%;               /* match cell content width */
-            box-sizing: border-box;    /* include padding in width */
-            margin: 0 auto 4px auto;   /* space below for SCAN */
+            border-radius: 8px;
+            padding: 3px;
+            display: inline-block;
+            margin-bottom: 2px;
         }
 
         .qr-code {
+            width: 0.6in;
+            height: 0.6in;
             display: block;
-            width: 100%;   /* scale to available width; prevents clipping */
-            height: auto;  /* preserve square aspect from source */
         }
 
         .scan-text {
@@ -78,29 +75,31 @@
             font-weight: bold;
             letter-spacing: 1px;
             text-align: center;
-            display: block;
-            margin-top: 0;
+            margin-top: 2px;
         }
 
         .message {
             color: #000;
-            font-size: 9px;
-            line-height: 1.2;
+            font-size: 8.9375px;
+            line-height: 1.1;
             font-weight: 500;
+            text-align: center;
+            word-wrap: break-word;
             margin-bottom: 6px;
         }
 
         .signature {
             color: #000;
-            font-size: 11px;
+            font-size: 10.725px;
             font-weight: bold;
             font-family: Georgia, serif;
+            text-align: center;
             margin-bottom: 2px;
         }
 
         .date {
             color: #666;
-            font-size: 5.3px;
+            font-size: 5.3625px;
             text-align: center;
             font-style: italic;
         }

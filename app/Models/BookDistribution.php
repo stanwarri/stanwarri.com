@@ -34,6 +34,11 @@ class BookDistribution extends Model
         return $this->hasOne(CommunityMember::class);
     }
 
+    public function communityMembers()
+    {
+        return $this->hasMany(CommunityMember::class);
+    }
+
     public function getQrImageAttribute()
     {
         if (!$this->qr_code) {
