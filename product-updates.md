@@ -1,5 +1,63 @@
 # Product Updates
 
+## Community QR Code Generator - Completed ✅
+
+**Date:** November 15, 2025
+
+### Features Implemented:
+1. **Admin Page for QR Code Generation**: Created a dedicated Filament admin page for generating QR codes for the community signup page (`/community/signup`)
+
+2. **Customization Options**:
+   - **Size Selection**: Choose from 4 size options (200px to 500px)
+   - **Format Options**: Download as PNG or SVG
+   - **Style Options**: Select between Black, Blue, or Green (placeholder for future enhancement)
+
+3. **Live Preview**: Real-time QR code preview that updates as you change options
+
+4. **Easy Download**: One-click download button with proper file naming and content types
+
+5. **User Interface**:
+   - Clean, organized layout with sections
+   - Dark mode support
+   - Helpful instructions and information display
+   - Shows the target URL for easy verification
+
+### Technical Implementation:
+- **Files Created/Modified**:
+  - `app/Filament/Pages/CommunityQrCode.php` - Main page class with form and download logic
+  - `app/Services/QrCodeService.php` - Added `generateQrCodeSvg()` method for SVG support
+  - `resources/views/filament/pages/community-qr-code.blade.php` - Beautiful UI with preview and options
+
+- **Integration**: Uses existing `QrCodeService` class with endroid/qr-code library
+- **Navigation**: Automatically added to admin panel with QR code icon
+- **Notifications**: Success notification on download
+
+### User Experience:
+- Simple, intuitive interface for non-technical users
+- Live preview eliminates guesswork
+- Multiple format options for different use cases (print vs digital)
+- Comprehensive instructions included on the page
+
+### Update (Same Day):
+Added "SCAN ME" label option:
+- New checkbox to include a "SCAN ME" label below the QR code
+- Automatically generates a combined image with QR code + label
+- Label is centered and uses large, readable font
+- Perfect for printing and posting in physical locations
+- Works with all size options
+- Only available for PNG format (SVG support coming later)
+
+### Next Steps:
+- Add SVG support for labeled QR codes
+- Consider adding actual color customization to QR codes
+- Add option to include logo/branding in center of QR code
+- Add custom text option for the label
+- Create printable templates with QR code + instructions
+
+---
+
+# Product Updates
+
 ## Phase 1: Core Admin Functionality - Completed ✅
 
 **Date:** August 13, 2025
