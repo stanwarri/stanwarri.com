@@ -17,11 +17,11 @@ class BookDistribution extends Model
         'distribution_date',
         'distribution_location',
         'notes',
-        'status'
+        'status',
     ];
 
     protected $casts = [
-        'distribution_date' => 'date'
+        'distribution_date' => 'date',
     ];
 
     public function book()
@@ -41,11 +41,12 @@ class BookDistribution extends Model
 
     public function getQrImageAttribute()
     {
-        if (!$this->qr_code) {
+        if (! $this->qr_code) {
             return null;
         }
-        
+
         $qrService = app(QrCodeService::class);
+
         return $qrService->generateQrCodeForDistribution($this->qr_code);
     }
 

@@ -10,5 +10,8 @@ Route::get('/books', [HomeController::class, 'books'])->name('books');
 Route::get('/join/{qrCode}', [CommunityController::class, 'show'])->name('community.join');
 Route::post('/join/{qrCode}', [CommunityController::class, 'store'])->name('community.register');
 
+Route::get('/community/signup', [CommunityController::class, 'signup'])->name('community.signup');
+Route::post('/community/signup', [CommunityController::class, 'storeSignup'])->name('community.signup.store');
+
 Route::get('/qr/print/{qrCode}', [CommunityController::class, 'printQr'])->name('qr.print');
 Route::get('/qr/view/{qrCode}', [CommunityController::class, 'viewQr'])->name('qr.view');

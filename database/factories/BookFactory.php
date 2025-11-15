@@ -32,7 +32,7 @@ class BookFactory extends Factory
         ];
 
         $book = fake()->randomElement($books);
-        
+
         return [
             'title' => $book['title'],
             'author' => $book['author'],

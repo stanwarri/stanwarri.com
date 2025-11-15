@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCommunitySignupRequest;
 use App\Mail\NewCommunityMemberNotification;
+use App\Models\Book;
 use App\Models\BookCounter;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
@@ -75,6 +77,45 @@ class CommunityController extends Controller
         ]);
     }
 
+    public function signup()
+    {
+        $books = Book::query()
+            ->orderBy('title')
+            ->get();
+
+        return view('community.signup', [
+            'books' => $books,
+        ]);
+    }
+
+    public function storeSignup(StoreCommunitySignupRequest $request)
+    {
+        $validated = $request->validated();
+
+        // Create community member
+        $member = CommunityMember::create([
+            'book_id' => $validated['book_id'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'interests' => $validated['interests'] ?? [],
+            'registered_at' => now(),
+        ]);
+
+        // Send notification email
+        $adminEmail = config('mail.admin_email', config('mail.from.address'));
+        if ($adminEmail) {
+            Mail::to($adminEmail)->send(new NewCommunityMemberNotification($member));
+        }
+
+        $book = Book::find($validated['book_id']);
+
+        return view('community.success', [
+            'member' => $member,
+            'book' => $book,
+        ]);
+    }
+
     public function printQr(string $qrCode, QrCodeService $qrService)
     {
         $distribution = BookDistribution::where('qr_code', $qrCode)
@@ -101,17 +142,17 @@ class CommunityController extends Controller
             'signature' => $signature,
             'generatedDate' => $generatedDate,
         ])
-        ->setPaper([0, 0, 113.04, 84.96], 'portrait') // 1.57in x 1.18in in points
-        ->setOptions([
-            'isHtml5ParserEnabled' => true,
-            'isPhpEnabled' => false,
-            'defaultFont' => 'Arial',
-            'dpi' => 96,
-            'fontSubstitution' => false,
-            'debugKeepTemp' => false
-        ]);
+            ->setPaper([0, 0, 113.04, 84.96], 'portrait') // 1.57in x 1.18in in points
+            ->setOptions([
+                'isHtml5ParserEnabled' => true,
+                'isPhpEnabled' => false,
+                'defaultFont' => 'Arial',
+                'dpi' => 96,
+                'fontSubstitution' => false,
+                'debugKeepTemp' => false,
+            ]);
 
-        $filename = 'qr-code-' . $distribution->book->title . '-' . $qrCode . '.pdf';
+        $filename = 'qr-code-'.$distribution->book->title.'-'.$qrCode.'.pdf';
 
         return $pdf->download($filename);
     }
