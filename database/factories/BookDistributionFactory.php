@@ -28,12 +28,12 @@ class BookDistributionFactory extends Factory
             'Train Station',
             'Office Building',
             'Neighborhood Cafe',
-            'Friend\'s House'
+            'Friend\'s House',
         ];
 
         $statuses = ['pending', 'distributed', 'registered'];
         $status = fake()->randomElement($statuses);
-        
+
         return [
             'book_id' => Book::factory(),
             'qr_code' => Str::random(20),
@@ -59,7 +59,7 @@ class BookDistributionFactory extends Factory
             'status' => 'distributed',
             'distribution_date' => fake()->dateTimeBetween('-3 months', 'now'),
             'distribution_location' => fake()->randomElement([
-                'Coffee Shop Downtown', 'Central Library', 'University Campus'
+                'Coffee Shop Downtown', 'Central Library', 'University Campus',
             ]),
         ]);
     }
@@ -70,7 +70,7 @@ class BookDistributionFactory extends Factory
             'status' => 'registered',
             'distribution_date' => fake()->dateTimeBetween('-3 months', '-1 week'),
             'distribution_location' => fake()->randomElement([
-                'Coffee Shop Downtown', 'Central Library', 'University Campus'
+                'Coffee Shop Downtown', 'Central Library', 'University Campus',
             ]),
         ]);
     }

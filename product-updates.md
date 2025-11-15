@@ -155,3 +155,58 @@
 - SEO-friendly page structure and meta tags
 
 **Next Phase:** Advanced features (analytics, notifications, bulk operations)
+
+## Community Signup Link Feature - Completed ✅
+
+**Date:** November 15, 2025
+
+### Features Implemented:
+1. **Dedicated Community Signup Page**:
+   - New public route at `/community/signup` for direct community access
+   - No QR code required - anyone can join the community
+   - Book selection dropdown showing all available books
+   - Professional design matching existing community pages
+
+2. **Enhanced Database Schema**:
+   - Added `book_id` column to `community_members` table
+   - Nullable foreign key to support both QR-based and direct signups
+   - Maintains backward compatibility with existing registrations
+
+3. **Form Validation**:
+   - Created `StoreCommunitySignupRequest` for proper validation
+   - Required fields: Book selection, name, email
+   - Optional fields: Phone number, interests
+   - Email uniqueness enforcement
+
+4. **User Experience**:
+   - Clean, responsive form with dark mode support
+   - Same interest categories as QR signup (10 topics)
+   - Book dropdown with author attribution
+   - Success page confirmation
+
+5. **Controller Implementation**:
+   - `signup()` method: Displays form with book options
+   - `storeSignup()` method: Validates and creates community member
+   - Email notifications to admin on new signups
+   - Reuses existing success view
+
+### Technical Implementation:
+- **Routes**: GET and POST `/community/signup`
+- **Form Request**: StoreCommunitySignupRequest with validation rules
+- **Model Updates**: Added book_id to CommunityMember fillable and relationship
+- **View**: resources/views/community/signup.blade.php
+- **Testing**: Comprehensive feature tests covering all scenarios
+
+### Testing Coverage:
+- Community signup page loads correctly
+- Books are displayed in the dropdown
+- Users can successfully sign up
+- Validation for required fields
+- Email uniqueness enforcement
+- Optional phone field handling
+
+**Benefits:**
+- Expands community reach beyond physical book distributions
+- Allows online discovery and joining
+- Tracks book interest without physical distribution
+- Maintains consistent user experience

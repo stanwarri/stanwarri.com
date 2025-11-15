@@ -2,15 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use UnitEnum;
-use BackedEnum;
-use Filament\Pages\Page;
-use Filament\Schemas\Schema;
 use App\Models\BookCounter;
+use BackedEnum;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use UnitEnum;
 
 /**
  * @property-read Schema $form
@@ -18,11 +18,14 @@ use Filament\Support\Icons\Heroicon;
 class ManageBookCounter extends Page
 {
     protected string $view = 'filament.pages.manage-book-counter';
-    protected static string | BackedEnum | null $navigationIcon = Heroicon::Calculator;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Calculator;
+
     protected static ?string $navigationLabel = 'Book Counter';
 
     protected static ?string $title = 'Manage Book Counter';
-    protected static string | UnitEnum | null $navigationGroup = 'Settings';
+
+    protected static string|UnitEnum|null $navigationGroup = 'Settings';
 
     /**
      * @var array<string, mixed> | null
@@ -67,6 +70,4 @@ class ManageBookCounter extends Page
             ->success()
             ->send();
     }
-
-
 }

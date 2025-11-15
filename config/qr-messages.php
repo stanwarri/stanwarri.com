@@ -22,6 +22,6 @@ return [
         'Keep winning, keep shining — the best is yet to come.',
         'Here\'s to smashing goals now and unlocking even greater ones ahead!',
     ],
-    
+
     'signature' => 'From Stanley Ojadovwa',
 ];

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Book;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class BookCommunitySeeder extends Seeder
@@ -16,7 +15,7 @@ class BookCommunitySeeder extends Seeder
     public function run(): void
     {
         $this->command->info('🎯 Creating Books...');
-        
+
         // Create specific popular books
         $popularBooks = [
             [
@@ -24,21 +23,21 @@ class BookCommunitySeeder extends Seeder
                 'author' => 'Paulo Coelho',
                 'description' => 'A magical story about following your dreams and finding your personal legend.',
                 'quantity_purchased' => 5,
-                'purchase_price' => 15.99
+                'purchase_price' => 15.99,
             ],
             [
                 'title' => 'Atomic Habits',
-                'author' => 'James Clear', 
+                'author' => 'James Clear',
                 'description' => 'The life-changing million-copy bestseller on how tiny changes can make a big difference.',
                 'quantity_purchased' => 8,
-                'purchase_price' => 18.99
+                'purchase_price' => 18.99,
             ],
             [
                 'title' => 'The 7 Habits of Highly Effective People',
                 'author' => 'Stephen Covey',
                 'description' => 'Powerful lessons in personal change and leadership principles.',
                 'quantity_purchased' => 3,
-                'purchase_price' => 16.50
+                'purchase_price' => 16.50,
             ],
         ];
 
@@ -49,7 +48,7 @@ class BookCommunitySeeder extends Seeder
                 'author' => $bookData['author'],
                 'isbn' => fake()->isbn13(),
                 'description' => $bookData['description'],
-                'cover_image_url' => "https://via.placeholder.com/300x450/4A90E2/FFFFFF?text=" . urlencode($bookData['title']),
+                'cover_image_url' => 'https://via.placeholder.com/300x450/4A90E2/FFFFFF?text='.urlencode($bookData['title']),
                 'purchase_date' => fake()->dateTimeBetween('-6 months', '-1 month'),
                 'purchase_price' => $bookData['purchase_price'],
                 'quantity_purchased' => $bookData['quantity_purchased'],
@@ -64,15 +63,15 @@ class BookCommunitySeeder extends Seeder
         $this->command->info("✅ Created {$books->count()} books");
 
         $this->command->info('📦 Creating Book Distributions...');
-        
+
         $totalDistributions = 0;
         foreach ($books as $book) {
             // Create distributions for some of the quantity (not all)
             $distributionsToCreate = fake()->numberBetween(1, $book->quantity_purchased - 1);
-            
+
             // Create distributions with different statuses
             $pendingCount = max(1, intval($distributionsToCreate * 0.3));
-            $distributedCount = max(1, intval($distributionsToCreate * 0.4)); 
+            $distributedCount = max(1, intval($distributionsToCreate * 0.4));
             $registeredCount = $distributionsToCreate - $pendingCount - $distributedCount;
 
             // Pending distributions
@@ -98,10 +97,10 @@ class BookCommunitySeeder extends Seeder
         $this->command->info("✅ Created {$totalDistributions} distributions");
 
         $this->command->info('👥 Creating Community Members...');
-        
+
         // Get all registered distributions and create community members for them
         $registeredDistributions = BookDistribution::where('status', 'registered')->get();
-        
+
         foreach ($registeredDistributions as $distribution) {
             CommunityMember::create([
                 'book_distribution_id' => $distribution->id,
@@ -127,7 +126,7 @@ class BookCommunitySeeder extends Seeder
                 'interests' => fake()->randomElements([
                     'Self-improvement',
                     'Business & Entrepreneurship',
-                    'Psychology & Philosophy', 
+                    'Psychology & Philosophy',
                     'Technology & Innovation',
                     'Literature & Fiction',
                     'Health & Wellness',
@@ -137,7 +136,7 @@ class BookCommunitySeeder extends Seeder
         }
 
         $this->command->info("✅ Created {$registeredDistributions->count()} community members");
-        
+
         $this->command->info('🎉 Seeding completed successfully!');
         $this->command->info('📊 Summary:');
         $this->command->info("  📚 Books: {$books->count()}");
