@@ -11,22 +11,28 @@ class CommunityMember extends Model
 
     protected $fillable = [
         'book_distribution_id',
+        'book_id',
         'name',
         'email',
         'phone',
         'message',
         'how_found',
         'interests',
-        'registered_at'
+        'registered_at',
     ];
 
     protected $casts = [
         'interests' => 'array',
-        'registered_at' => 'datetime'
+        'registered_at' => 'datetime',
     ];
 
     public function bookDistribution()
     {
         return $this->belongsTo(BookDistribution::class);
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
     }
 }

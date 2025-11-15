@@ -25,15 +25,16 @@ class TestDataCommand extends Command
      */
     public function handle()
     {
-        if (!$this->confirm('This will delete all existing data and create fresh test data. Continue?')) {
+        if (! $this->confirm('This will delete all existing data and create fresh test data. Continue?')) {
             $this->info('Operation cancelled.');
+
             return;
         }
 
         $this->info('🔄 Refreshing database and generating test data...');
-        
+
         $this->call('migrate:fresh', ['--seed' => true]);
-        
+
         $this->newLine();
         $this->info('✅ Test data generated successfully!');
         $this->info('🎯 You can now access the admin panel at /admin');

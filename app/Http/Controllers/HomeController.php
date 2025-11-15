@@ -6,7 +6,6 @@ use App\Models\Book;
 use App\Models\BookCounter;
 use App\Models\BookDistribution;
 use App\Models\CommunityMember;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -44,6 +43,7 @@ class HomeController extends Controller
             if ($book->cover_image_url) {
                 $book->cover_image_url = \Illuminate\Support\Facades\Storage::url($book->cover_image_url);
             }
+
             return $book;
         });
 

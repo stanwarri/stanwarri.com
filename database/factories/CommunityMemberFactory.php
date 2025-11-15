@@ -25,12 +25,12 @@ class CommunityMemberFactory extends Factory
             'Found on park bench',
             'Office book sharing',
             'Community event',
-            'Random encounter'
+            'Random encounter',
         ];
 
         $interestOptions = [
             'Self-improvement',
-            'Business & Entrepreneurship', 
+            'Business & Entrepreneurship',
             'Psychology & Philosophy',
             'Technology & Innovation',
             'Literature & Fiction',
@@ -38,7 +38,7 @@ class CommunityMemberFactory extends Factory
             'History & Politics',
             'Science & Nature',
             'Travel & Culture',
-            'Arts & Creativity'
+            'Arts & Creativity',
         ];
 
         $messages = [
