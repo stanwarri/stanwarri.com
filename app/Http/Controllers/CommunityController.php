@@ -36,7 +36,7 @@ class CommunityController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:community_members,email',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20|unique:community_members,phone',
             'message' => 'nullable|string|max:1000',
             'how_found' => 'nullable|string|max:255',
             'interests' => 'nullable|array',
@@ -80,7 +80,7 @@ class CommunityController extends Controller
     public function signup()
     {
         $books = Book::query()
-            ->orderBy('title')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('community.signup', [
@@ -92,7 +92,6 @@ class CommunityController extends Controller
     {
         $validated = $request->validated();
 
-        // Create community member
         $member = CommunityMember::create([
             'book_id' => $validated['book_id'],
             'name' => $validated['name'],

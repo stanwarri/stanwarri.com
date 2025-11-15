@@ -25,7 +25,7 @@ class StoreCommunitySignupRequest extends FormRequest
             'book_id' => 'required|exists:books,id',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:community_members,email',
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20|unique:community_members,phone',
             'interests' => 'nullable|array',
         ];
     }

@@ -21,23 +21,42 @@ class CommunityMembersTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->copyable(),
 
                 TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->copyable(),
 
                 TextColumn::make('phone')
-                    ->placeholder('Not provided'),
+                    ->placeholder('Not provided')
+                    ->copyable(),
 
-                TextColumn::make('bookDistribution.book.title')
+                TextColumn::make('book_title')
                     ->label('Book Received')
                     ->placeholder('No book associated')
-                    ->searchable(),
+                    ->getStateUsing(function ($record) {
+                        return $record->bookDistribution?->book?->title ?? $record->book?->title;
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(function (Builder $query) use ($search) {
+                            $query->whereHas('bookDistribution.book', fn (Builder $q) => $q->where('title', 'like', "%{$search}%"))
+                                  ->orWhereHas('book', fn (Builder $q) => $q->where('title', 'like', "%{$search}%"));
+                        });
+                    }),
 
-                TextColumn::make('bookDistribution.book.author')
+                TextColumn::make('book_author')
                     ->label('Author')
                     ->placeholder('No book associated')
-                    ->searchable()
+                    ->getStateUsing(function ($record) {
+                        return $record->bookDistribution?->book?->author ?? $record->book?->author;
+                    })
+                    ->searchable(query: function (Builder $query, string $search): Builder {
+                        return $query->where(function (Builder $query) use ($search) {
+                            $query->whereHas('bookDistribution.book', fn (Builder $q) => $q->where('author', 'like', "%{$search}%"))
+                                  ->orWhereHas('book', fn (Builder $q) => $q->where('author', 'like', "%{$search}%"));
+                        });
+                    })
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('how_found')

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Hero Section -->
     <div class="mx-auto max-w-7xl lg:px-8">
         <div class="relative px-4 sm:px-8 lg:px-12">
             <div class="mx-auto max-w-2xl lg:max-w-5xl">
@@ -12,11 +11,13 @@
                             <span class="text-teal-600 dark:text-teal-400 font-medium text-sm">Join Our Community</span>
                         </div>
                         <h1 class="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl mb-6">
-                            Welcome to our community
+                            Stories Are Meant to Travel
                         </h1>
-                        <p class="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
-                            Join a network of readers and thinkers who believe in the power of shared knowledge.
-                            Select a book that interests you and become part of our community.
+                        <p class="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+                            You're likely here because you received a book from me. Over the years, I've made it a personal mission to share books—sometimes with friends, sometimes with total strangers—simply because I believe that knowledge grows when it's shared. Each book that leaves my hands carries with it an invitation: to explore new ideas, challenge old assumptions, and connect with others on the same journey.
+                        </p>
+                        <p class="text-base text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto leading-relaxed mt-4">
+                            This is more than just a book exchange—it's an invitation to join a community of curious minds who believe in the transformative power of shared wisdom. Together, we can create a space where ideas flourish, conversations deepen, and lifelong learning becomes a collective adventure.
                         </p>
                     </div>
                 </div>
@@ -59,7 +60,6 @@
                               class="space-y-6">
                             @csrf
 
-                            <!-- Book Selection -->
                             <div>
                                 <label for="book_id"
                                        class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
@@ -71,7 +71,7 @@
                                     required
                                     class="w-full px-4 py-3 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors @error('book_id') border-red-300 @enderror"
                                 >
-                                    <option value="">Choose a book that interests you...</option>
+                                    <option value="">Select a book that you have received...</option>
                                     @foreach($books as $book)
                                         <option value="{{ $book->id }}" {{ old('book_id') == $book->id ? 'selected' : '' }}>
                                             {{ $book->title }} by {{ $book->author }}
