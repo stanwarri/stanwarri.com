@@ -1,5 +1,55 @@
 # Personal Community Website Project Plan
 
+## Current Task: Community Signup Link
+
+### Overview
+Create a dedicated community signup page that allows people to join the community by selecting a book of interest from all available books in the database, without requiring a QR code.
+
+### Problem
+Currently, community members can only register through the `/join/{qrCode}` route, which requires a specific book distribution QR code. We need a general signup page where people can express interest in joining the community and select which book interests them.
+
+### Solution
+Create a new public signup route at `/community/signup` with a form that includes:
+- Book selection dropdown (all books from database)
+- Name field (required)
+- Email field (required)
+- Phone number field (optional)
+- Topics of interest checkboxes (optional)
+
+### Todo Items
+
+- [ ] Add new routes for community signup (GET and POST)
+- [ ] Create Form Request class for validation
+- [ ] Create controller methods for showing and handling the signup form
+- [ ] Create the signup view (Blade template) following existing design patterns
+- [ ] Test the new signup flow
+- [ ] Run Laravel Pint to format code
+- [ ] Update product-updates.md with the changes
+
+### Technical Details
+
+**Routes:**
+- `GET /community/signup` - Show the signup form
+- `POST /community/signup` - Handle form submission
+
+**Validation:**
+- book_id: required, exists in books table
+- name: required, string, max 255
+- email: required, email, max 255, unique in community_members
+- phone: nullable, string, max 20
+- interests: nullable, array
+
+**View Structure:**
+Will follow the existing `community/join.blade.php` design pattern with:
+- Hero section with welcome message
+- Book selection dropdown (instead of showing a specific book)
+- Form fields matching the requirements
+- Same styling and dark mode support
+
+**Note:** `community_members.book_distribution_id` is nullable, so we can create members without a distribution. We'll store the book_id in a JSON field or add a separate column if needed.
+
+---
+
 ## Project Overview
 Building a personal community website where books are given to random people with QR codes that link to a community registration form. The system tracks book inventory, distributions, and community member registrations.
 
